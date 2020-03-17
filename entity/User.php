@@ -3,11 +3,11 @@
 class User
 {
     private $username;
+    private $password;
     private $firstName;
     private $lastName;
     private $phoneNumber;
     private $email;
-    private $password;
     private $role;
 
     public function getUsername()
