@@ -42,5 +42,6 @@ CREATE TABLE posts
     approved_at TIMESTAMP,
     is_active BOOLEAN NOT NULL DEFAULT true,
     type int NOT NULL,
+    CONSTRAINT `posts_FK_users` FOREIGN KEY (`author`) REFERENCES `users` (`username`) ON UPDATE CASCADE,
     FOREIGN KEY (type) REFERENCES post_types(id)
 );
