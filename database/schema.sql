@@ -10,8 +10,7 @@ DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles
 (
-    id   int AUTO_INCREMENT PRIMARY KEY,
-    role varchar(20)
+    role varchar(20) primary key
 );
 
 CREATE TABLE users
@@ -22,8 +21,8 @@ CREATE TABLE users
     last_name    varchar(50),
     email        varchar(30) UNIQUE NOT NULL,
     phone_number varchar(15),
-    role         int                NOT NULL,
-    FOREIGN KEY (role) references roles (id)
+    role         varchar(20)                NOT NULL,
+    FOREIGN KEY (role) references roles (role)
 );
 
 CREATE TABLE post_types(
