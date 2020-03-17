@@ -10,6 +10,9 @@
         private $isActive;
         private $type;
 
+        //for sql query
+        private $orderBy;
+
         public function getId() {
             return $this->id;
         }
@@ -80,6 +83,14 @@
 
         public function setType($type) {
             $this->type = $type;
+        }
+
+        public function getOrderBy() {
+            return $this->orderBy;
+        }
+
+        public function setOrderBy($orderBy) {
+            $this->orderBy = $orderBy;
         }
     }
 ?>
