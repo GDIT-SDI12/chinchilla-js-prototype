@@ -38,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php require_once 'components/head.php' ?>
 
 <body>
+<?php require_once 'components/navbar.php' ?>
 <div class="container">
-    <?php require_once 'components/navbar.php' ?>
     <div class="logo" style="text-align: center;">
         <img src="images/android-chrome-384x384.png" alt="logo"/>
     </div>

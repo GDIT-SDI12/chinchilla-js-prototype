@@ -35,8 +35,8 @@ function getRandomImage() {
 <?php require_once 'components/head.php' ?>
 
 <body>
+<?php require_once 'components/navbar.php' ?>
 <div class="container">
-    <?php require_once 'components/navbar.php' ?>
     <form class="form-inline" style="padding-top: 3em;">
         <div class="form-row ml-5">
             <select id="typeFilter" class="form-control form-control">

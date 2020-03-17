@@ -8,8 +8,8 @@ include_once './commons/validatesession.php';
 <?php require_once 'components/head.php' ?>
 
 <body>
+<?php require_once 'components/navbar.php' ?>
 <div class="container">
-    <?php require_once 'components/navbar.php' ?>
     <div class="row" style="padding-top: 3em;">
         <div class="col-2">
             <ul class="nav nav-pills nav-fill flex-column">
