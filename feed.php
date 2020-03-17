@@ -1,12 +1,14 @@
 <?php
 session_start();
-$user = $_SESSION['user'];
-echo json_encode($user);
 
 include_once './commons/db.php';
 include_once './entity/Post.php';
 include_once './dao/postDao.php';
 include_once './entity/User.php';
+
+$user = new User();
+$user = unserialize($_SESSION['user']);
+// echo $user->getUsername();
 
 $postDao = new PostDao();
 $posts = $postDao->list(new Post());
