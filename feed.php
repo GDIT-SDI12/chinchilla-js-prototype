@@ -1,9 +1,12 @@
 <?php
 session_start();
+$user = $_SESSION['user'];
+echo json_encode($user);
 
 include_once './commons/db.php';
 include_once './entity/Post.php';
 include_once './dao/postDao.php';
+include_once './entity/User.php';
 
 $postDao = new PostDao();
 $posts = $postDao->list(new Post());
@@ -25,7 +28,7 @@ function getRandomImage() {
     $response = curl_exec($curl);
 
     curl_close($curl);
-    return '<img class="card-img-top p-3 p-3" src="data:image/jpeg;base64,'.base64_encode( $response ).'"/>';
+    return '<img class="card-img-top p-3 p-3" src="data:image/jpeg;base64,'. base64_encode( $response ) .'"/>';
 }
 
 ?>
