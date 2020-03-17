@@ -27,9 +27,9 @@ class UserDao
                     $user = new User();
                     $user->setUsername($row['username']);
                     $user->setPassword($row['password']);
-                    $user->setFirstName($row['firstname']);
-                    $user->setLastName($row['lastname']);
-                    $user->setPhoneNumber($row['phonenumber']);
+                    $user->setFirstName($row['first_name']);
+                    $user->setLastName($row['last_name']);
+                    $user->setPhoneNumber($row['phone_number']);
                     $user->setEmail($row['email']);
                     $user->setRole($row['role']);
                 }
@@ -50,23 +50,27 @@ class UserDao
     {
         $flag = false;
 
-        $sql = "insert into " . $this->table . " (username, password, name, email, date_joined, role_id)"
-            . " values (?, ?, ?, ?, date_format(now(), '%Y-%m-%d'), ?)";
+        $sql = "insert into " . $this->table . " (username, password, first_name, last_name, email, phone_number, role)"
+            . " values (?, ?, ?, ?, ?, ?, ?)";
 
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("ssssi",
+        $stmt->bind_param("sssssss",
             $p_username,
             $p_password,
-            $p_name,
+            $p_firstName,
+            $p_lastName,
             $p_email,
+            $p_phoneNumber,
             $p_role
         );
 
         $p_username = $user->getUsername();
         $p_password = $user->getPassword();
-        $p_name = $user->getName();
+        $p_firstName = $user->getFirstName();
+        $p_lastName = $user->getLastName();
         $p_email = $user->getEmail();
+        $p_phoneNumber = $user->getPhoneNumber();
         $p_role = $user->getRole();
 
         if ($stmt->execute()) {
