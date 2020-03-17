@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+include_once './commons/db.php';
+include_once './entity/Post.php';
+include_once './dao/postDao.php';
+
+$postDao = new PostDao();
+$posts = $postDao->list(new Post());
+// echo '<pre>';
+// echo var_dump($posts);
+// echo '</pre>'
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,86 +35,23 @@
         </div>
     </form>
     <div class="row row-cols-1 row-cols-md-2" style="padding-top: 3em;">
-        <div class="col mb-4">
-            <div class="card">
-                <div>
-                    <img src="http://via.placeholder.com/640x360" class="card-img-top p-3 p-3" alt="...">
-                </div>
-                <div class="card-body">
-                    <a href="#"><a href="#">
-                            <h5 class="card-title">Post Title</h5>
-                        </a></a>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text text-right"><small class="text-muted">Posted March 11, 2020</small></p>
-                </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card">
-                <img src="http://via.placeholder.com/640x360" class="card-img-top p-3" alt="...">
-                <div class="card-body">
-                    <a href="#">
-                        <h5 class="card-title">Post Title</h5>
-                    </a>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text text-right"><small class="text-muted">Posted March 11, 2020</small></p>
+
+        <?php foreach($posts as $post) { ?>
+            <div class="col mb-4">
+                <div class="card">
+                    <div>
+                        <img src="http://via.placeholder.com/640x360" class="card-img-top p-3 p-3" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <a href="#">
+                            <h5 class="card-title"><?= $post->getTitle(); ?></h5>
+                        </a>
+                        <p class="card-text"><?= $post->getBody(); ?></p>
+                        <p class="card-text text-right"><small class="text-muted">Posted <?= $post->getApprovedAt(); ?></small></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card">
-                <img src="http://via.placeholder.com/640x360" class="card-img-top p-3" alt="...">
-                <div class="card-body">
-                    <a href="#">
-                        <h5 class="card-title">Post Title</h5>
-                    </a>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content.</p>
-                    <p class="card-text text-right"><small class="text-muted">Posted March 11, 2020</small></p>
-                </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card">
-                <img src="http://via.placeholder.com/640x360" class="card-img-top p-3" alt="...">
-                <div class="card-body">
-                    <a href="#">
-                        <h5 class="card-title">Post Title</h5>
-                    </a>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text text-right"><small class="text-muted">Posted March 11, 2020</small></p>
-                </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card">
-                <img src="http://via.placeholder.com/640x360" class="card-img-top p-3" alt="...">
-                <div class="card-body">
-                    <a href="#">
-                        <h5 class="card-title">Post Title</h5>
-                    </a>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text text-right"><small class="text-muted">Posted March 11, 2020</small></p>
-                </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card">
-                <img src="http://via.placeholder.com/640x360" class="card-img-top p-3" alt="...">
-                <div class="card-body">
-                    <a href="#">
-                        <h5 class="card-title">Post Title</h5>
-                    </a>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text text-right"><small class="text-muted">Posted March 11, 2020</small></p>
-                </div>
-            </div>
-        </div>
+        <?php } ?>
     </div>
 </div>
 </body>
