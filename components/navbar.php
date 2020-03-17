@@ -1,5 +1,10 @@
 <?php
-    //echo $user->getUsername();
+include_once './entity/User.php';
+$session_user = new User();
+if(isset($_SESSION['user'])) {
+    $session_user = unserialize($_SESSION['user']);
+}
+// echo $user->getUsername();
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand mb-0 h1" href="login.php">Chinchilla</a>
@@ -9,7 +14,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <?php if(isset($user) && (null !== $user->getUsername())) {?>
+            <!-- The $user variable (is/should be) declared from the php file that included this file -->
+            <?php if(isset($session_user) && (null !== $session_user->getUsername())) {?>
                 <li class="nav-item">
                     <a class="nav-link" href="profile.php">Profile</a>
                 </li>
