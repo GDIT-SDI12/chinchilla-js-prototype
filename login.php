@@ -20,7 +20,7 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand mb-0 h1" href="index.html">Chinchilla</a>
+            <a class="navbar-brand mb-0 h1" href="index.php">Chinchilla</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,10 +28,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="register.html">Register</a>
+                        <a class="nav-link" href="register.php">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Login</a>
+                        <a class="nav-link active" href="index.php">Login</a>
                     </li>
                 </ul>
             </div>
@@ -47,15 +47,15 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             </div>
             <div class="form-group">
-                <a class="nav-link" href="forgotpassword.html" style="text-align: center;">Forgot Password?</a>
+                <a class="nav-link" href="forgotpassword.php" style="text-align: center;">Forgot Password?</a>
             </div>
             <div class="form-group">
-                <a href="feed.html" style="text-decoration: none;">
+                <a href="feed.php" style="text-decoration: none;">
                     <button type="button" class="btn btn-primary btn-block">Sign In</button>
                 </a>
             </div>
             <div class="form-group"></div>
-                <a href="register.html" style="text-decoration: none;">
+                <a href="register.php" style="text-decoration: none;">
                     <button type="button" class="btn btn-outline-primary btn-block">Sign Up</button>
                 </a>
             </div>

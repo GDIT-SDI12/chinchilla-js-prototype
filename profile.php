@@ -20,7 +20,7 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand mb-0 h1" href="feed.html">Chinchilla</a>
+            <a class="navbar-brand mb-0 h1" href="feed.php">Chinchilla</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,10 +28,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="profile.html">Profile</a>
+                        <a class="nav-link active" href="profile.php">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">Logout</a>
+                        <a class="nav-link" href="login.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -43,10 +43,10 @@
                         <a class="nav-link btn-outline-primary active" href="#">Edit Profile</a>
                     </li>
                     <li class="nav-item" style="margin-bottom: 1em;">
-                        <a class="nav-link btn-outline-primary" href="myposts.html">My Posts</a>
+                        <a class="nav-link btn-outline-primary" href="myposts.php">My Posts</a>
                     </li>
                     <li class="nav-item" style="margin-bottom: 1em;">
-                        <a class="nav-link btn-outline-primary" href="savedposts.html">Saved Posts</a>
+                        <a class="nav-link btn-outline-primary" href="savedposts.php">Saved Posts</a>
                     </li>
                 </ul>
             </div>
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="profile.html" style="text-decoration: none;">
+                            <a href="profile.php" style="text-decoration: none;">
                                 <button type="button" class="btn btn-outline-primary col-md-3 offset-md-9">Save</button>
                             </a>
                         </form>
