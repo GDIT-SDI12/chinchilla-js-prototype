@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once 'dao/userDao.php';
 require_once 'commons/db.php';
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!$user || $user->getPassword() !== $password) {
         $error = "Invalid credentials";
     } else {
-        $_SESSION['user'] = $user;
+        $_SESSION['user'] = serialize($user);
         if ($user->getRole() == 1) {
             header("location: managerPanel.php");
         } else {
