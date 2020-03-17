@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (isset($_SESSION['user'])) {
+    header("location: index.php");
+    exit;
+}
+
 require_once 'dao/userDao.php';
 require_once 'commons/db.php';
 require_once 'entity/User.php';
