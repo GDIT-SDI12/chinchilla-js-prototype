@@ -18,9 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['user'] = $user;
         if ($user->getRole() == 1) {
-            header("location: /managerPanel.php");
+            header("location: managerPanel.php");
         } else {
-            header("location: /feed.php");
+            header("location: feed.php");
         }
     }
 }
