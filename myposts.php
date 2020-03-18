@@ -2,8 +2,9 @@
 include_once './commons/validatesession.php';
 include_once './commons/db.php';
 include_once './entity/Post.php';
-include_once './dao/postDao.php';
 include_once './entity/User.php';
+include_once './dao/postDao.php';
+include_once './components/createPostModal.php';
 
 $postDao = new PostDao();
 $post = new Post();
@@ -49,7 +50,7 @@ $myPosts = $postDao->list($post);
                         <option>Oldest - Newest (Ascending)</option>
                     </select>
                     <button type="button" class="btn btn-primary ml-2">Filter</button>
-                    <button type="button" class="btn btn-primary ml-2">Create Post</button>
+                    <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createPostModal">Create Post</button>
                 </div>
             </form>
 
@@ -74,7 +75,7 @@ $myPosts = $postDao->list($post);
                             </div>
                         </div>
                         <div class="card-footer col">
-                            <p class="card-text text-right" style="margin-right: 1em;"><small class="text-muted">Approved <?= $myPost->getApprovedAt(); ?></small></p>
+                            <p class="card-text text-right" style="margin-right: 1em;"><small class="text-muted">Approved last <?= $myPost->getApprovedAt(); ?></small></p>
                         </div>
                     </div>
                 </div>
