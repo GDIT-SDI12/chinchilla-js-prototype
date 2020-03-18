@@ -28,13 +28,22 @@
                     $sql .= " and author = '" . $post->getAuthor() . "'";
                 }
 
+                if(null !== $post->getApprovedAt()) {
+                    if($post->getApprovedAt() !== "ALL") {
+                        // don't know what to do yet
+                    }
+                } else {
+                    // default display only approved posts
+                    $sql .= " and approved_at is not null";
+                }
+
                 if(null !== $post->getOrderBy()) {
                     $sql .= " order by created_at " . $post->getOrderBy();
                 } else {
                     $sql .= " order by created_at desc ";
                 }
             }
-
+            
             $con = $this->db->getConnection();
 
             if($result = $con->query($sql)) {
