@@ -1,5 +1,5 @@
 <?php
-include_once './commons/validatesession.php';
+require_once './commons/validatesession.php';
 
 ?>
 <!DOCTYPE html>
