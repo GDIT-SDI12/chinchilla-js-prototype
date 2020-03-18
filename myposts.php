@@ -1,5 +1,16 @@
 <?php
 include_once './commons/validatesession.php';
+include_once './commons/db.php';
+include_once './entity/Post.php';
+include_once './dao/postDao.php';
+include_once './entity/User.php';
+
+$postDao = new PostDao();
+$post = new Post();
+$user = new User();
+$user = unserialize($_SESSION['user']);
+$post->setAuthor($user->getUsername());
+$myPosts = $postDao->list($post);
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +35,7 @@ include_once './commons/validatesession.php';
                 </li>
             </ul>
         </div>
-        <!-- contents -->
+        
         <div class="col-10">
             <form class="form-inline" style="padding-bottom: 3em;">
                 <div class="form-row ml-5">
@@ -41,72 +52,33 @@ include_once './commons/validatesession.php';
                     <button type="button" class="btn btn-primary ml-2">Create Post</button>
                 </div>
             </form>
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-4 p-2">
-                        <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Posted March 11, 2020</small></p>
+
+            <!-- contents -->
+            <?php foreach($myPosts as $myPost) { ?>
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 p-2">
+                            <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-outline-primary btn-block">Edit</button>
-                            <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
-                            <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $myPost->getTitle(); ?></h5>
+                                <p class="card-text"><?= $myPost->getBody(); ?></p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-4 p-2">
-                        <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Posted March 11, 2020</small></p>
+                        <div class="col-md-2">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-outline-primary btn-block">Edit</button>
+                                <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
+                                <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-outline-primary btn-block">Edit</button>
-                            <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
-                            <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
+                        <div class="card-footer col">
+                            <p class="card-text text-right" style="margin-right: 1em;"><small class="text-muted">Approved <?= $myPost->getApprovedAt(); ?></small></p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-4 p-2">
-                        <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Posted March 11, 2020</small></p>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-outline-primary btn-block">Edit</button>
-                            <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
-                            <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
 </div>
