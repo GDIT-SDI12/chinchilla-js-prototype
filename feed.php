@@ -3,7 +3,6 @@ require_once './commons/validatesession.php';
 include_once './commons/db.php';
 include_once './entity/Post.php';
 include_once './dao/postDao.php';
-include_once './entity/User.php';
 
 $postDao = new PostDao();
 $posts = $postDao->list(new Post());
@@ -65,7 +64,7 @@ function getRandomImage() {
                             <h5 class="card-title"><?= $post->getTitle(); ?></h5>
                         </a>
                         <p class="card-text"><?= $post->getBody(); ?></p>
-                        <p class="card-text text-right"><small class="text-muted">Posted <?= $post->getApprovedAt(); ?></small></p>
+                        <p class="card-text text-right"><small class="text-muted">Posted <?= $post->getCreatedAt(); ?></small></p>
                     </div>
                 </div>
             </div>
