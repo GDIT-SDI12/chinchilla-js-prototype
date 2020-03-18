@@ -65,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php require_once 'components/head.php' ?>
 
 <body>
+<?php require_once 'components/navbar.php' ?>
 <div class="container">
-    <?php require_once 'components/navbar.php' ?>
     <form method="POST" action="" style="padding : 10% 15% 15%;">
         <div class="form-group row">
             <label for="username" class="col-sm-3 col-form-label">Username *</label>

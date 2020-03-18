@@ -1,5 +1,5 @@
 <?php
-require_once './commons/validatesession.php';
+include_once './commons/validatesession.php';
 
 ?>
 <!DOCTYPE html>
@@ -8,8 +8,8 @@ require_once './commons/validatesession.php';
 <?php require_once 'components/head.php' ?>
 
 <body>
+<?php require_once 'components/navbar.php' ?>
 <div class="container">
-    <?php require_once 'components/navbar.php' ?>
     <div class="row" style="padding-top: 3em;">
         <div class="col-2">
             <ul class="nav nav-pills nav-fill flex-column">
@@ -111,5 +111,4 @@ require_once './commons/validatesession.php';
     </div>
 </div>
 </body>
-
 </html>
