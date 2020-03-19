@@ -1,53 +1,64 @@
 <?php
-include_once './commons/validatesession.php';
-include_once './entity/User.php';
+require_once 'commons/validatesession.php';
+require_once 'commons/db.php';
+require_once 'entity/User.php';
+require_once 'dao/userDao.php';
+
 $user = new User();
 $user = unserialize($_SESSION['user']);
+$errors = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $user->getUsername();
-    $password = trim($_POST['password']);
-    $oldPassword = trim($_POST['password']);
+    echo $username;
+    //Password in db
+    $password = $user->getPassword();
+    //Entered current password for check
+    $currentPassword = trim($_POST['currentPassword']);
     $newPassword = trim($_POST['newPassword']);
     $newPasswordConfirmation = trim($_POST['newPasswordConfirmation']);
-    $email = trim($_POST['email']);
-    $firstName = trim($_POST['firstName']);
-    $lastName = trim($_POST['lastName']);
-    $phoneNumber = trim($_POST['phoneNumber']);
+
+    $email = empty(trim($_POST['email'])) ? $user->getEmail() : trim($_POST['email']);
+    $firstName = empty(trim($_POST['firstName'])) ? $user->getFirstName() : trim($_POST['firstName']);
+    $lastName = empty(trim($_POST['lastName'])) ? $user->getLastName() : trim($_POST['lastName']);
+    $phoneNumber = empty(trim($_POST['phoneNumber'])) ? $user->getPhoneNumber() : trim($_POST['phoneNumber']);
 
     $userDao = new UserDao();
-    $user = new User();
-    $errors = array();
-    // Collect data from form
-    if (empty($password)) {
-        $errors[] = "Password is required.";
-    } elseif ($password !== $newPasswordConfirmation) {
-        $errors[] = "Password is not confirmed";
+
+    // Set new data
+    $updatedUser = new User();
+    $updatedUser->setUsername($username);
+    $updatedUser->setEmail($email);
+    $updatedUser->setFirstName($firstName);
+    $updatedUser->setLastName($lastName);
+    $updatedUser->setPhoneNumber($phoneNumber);
+
+    if (!empty($currentPassword) || !empty($newPassword)) {
+        if ($currentPassword !== $password) {
+            $errors[] = "Incorrect current password";
+        }
+        if (empty($newPassword)) {
+            $errors[] = "Password cannot be empty";
+        } elseif ($newPassword !== $newPasswordConfirmation) {
+            $errors[] = "New password must be confirmed";
+        } else {
+            $updatedUser->setPassword($newPassword);
+        }
     } else {
-        $user->setPassword($password);
-    }
-    if (empty($email)) {
-        $errors[] = "Email is required.";
-    } else {
-        $user->setEmail($email);
-    }
-    if (!empty($firstName)) {
-        $user->setFirstName($firstName);
-    }
-    if (!empty($lastName)) {
-        $user->setLastName($lastName);
-    }
-    if (!empty($phoneNumber)) {
-        $user->setPhoneNumber($phoneNumber);
+        $updatedUser->setPassword($password);
     }
 
     if (empty($errors)) {
-        $user->setRole('user');
-        $userDao->create($user);
-        header("location: /login.php");
+        $userDao->update($updatedUser);
+        $_SESSION['user'] = serialize($userDao->find($username));
+        header("location: /profile.php");
+    } else {
+        // Errors processing
     }
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                      aria-labelledby="v-pills-home-tab">
-                    <form method="" action="" style="padding : 0 15% 15%;">
+                    <form method="POST" action="" style="padding : 0 15% 15%;">
                         <div class="form-group row">
                             <label for="inputUsername" class="col-sm-3 col-form-label">Username</label>
                             <div class="col-sm-9">
@@ -114,15 +125,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="row">
                             <p>
                                 <a class="btn btn-primary float-right" data-toggle="collapse"
-                                   href="#changePasswordDialog">Change Password</a>
+                                   href="#changePasswordDialog" onclick="this.blur();">Change Password</a>
                             </p>
                         </div>
                         <div class="row">
                             <div class="col collapse" id="changePasswordDialog">
                                 <div class="form-group row">
-                                    <label for="oldPassword" class="col-sm-3 col-form-label">Old Password</label>
+                                    <label for="currentPassword" class="col-sm-3 col-form-label">Current
+                                        Password</label>
                                     <div class="col-sm-9">
-                                        <input type="password" class="form-control" id="oldPassword" name="oldPassword">
+                                        <input type="password" class="form-control" id="currentPassword"
+                                               name="currentPassword">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -132,8 +145,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="newPasswordConfirmation" class="col-sm-3 col-form-label">Confirm New
-                                        Password</label>
+                                    <label for="newPasswordConfirmation"
+                                           class="col-sm-3 col-form-label">Confirmation</label>
                                     <div class="col-sm-9">
                                         <input type="password" class="form-control" id="newPasswordConfirmation"
                                                name="newPasswordConfirmation">
@@ -142,8 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-default btn-outline-primary inline float-right">Save
-                            </button>
+                            <input type="submit" class="btn btn-default btn-outline-primary inline float-right" value="Save">
                         </div>
                     </form>
                 </div>

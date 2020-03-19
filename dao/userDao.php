@@ -76,7 +76,7 @@ class UserDao
         if ($stmt->execute()) {
             $flag = true;
         }
-        $stmt->close();
+//        $stmt->close();
         $con->close();
         return $flag;
     }
@@ -85,29 +85,30 @@ class UserDao
     {
         $flag = false;
 
-        $sql = "update " . $this->table
-            . " set username = ?, name = ?, email = ?, is_enabled = ? where id = ?;";
-
+        $sql = "UPDATE " . $this->table . " SET password = ?, first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE username = ?";
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("sssii",
-            $p_username,
-            $p_name,
+        $stmt->bind_param("ssssss",
+            $p_password,
+            $p_firstName,
+            $p_lastName,
             $p_email,
-            $p_isEnabled,
-            $p_id
+            $p_phoneNumber,
+            $p_username
         );
 
         $p_username = $user->getUsername();
-        $p_name = $user->getName();
+        $p_password = $user->getPassword();
+        $p_firstName = $user->getFirstName();
+        $p_lastName = $user->getLastName();
         $p_email = $user->getEmail();
-        $p_isEnabled = $user->isEnabled();
-        $p_id = $user->getId();
+        $p_phoneNumber = $user->getPhoneNumber();
+        $p_role = $user->getRole();
 
         if ($stmt->execute()) {
             $flag = true;
         }
-        $stmt->close();
+//        $stmt->close();
         $con->close();
         return $flag;
     }
