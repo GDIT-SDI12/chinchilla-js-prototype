@@ -9,22 +9,21 @@ include_once './commons/validatesession.php';
 
 <body>
 <?php require_once 'components/navbar.php' ?>
-<div class="container">
-    <div class="row" style="padding-top: 3em;">
-        <div class="col-2">
-            <ul class="nav nav-pills nav-fill flex-column">
-                <li class="nav-item" style="margin-bottom: 1em;">
-                    <a class="nav-link btn-outline-primary" href="profile.php">Edit Profile</a>
-                </li>
-                <li class="nav-item" style="margin-bottom: 1em;">
-                    <a class="nav-link btn-outline-primary" href="myposts.php">My Posts</a>
-                </li>
-                <li class="nav-item" style="margin-bottom: 1em;">
-                    <a class="nav-link btn-outline-primary active" href="savedposts.php">Saved Posts</a>
-                </li>
-            </ul>
-        </div>
-
+<div class="row pt-5">
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-fill flex-column">
+            <li class="nav-item" style="margin-bottom: 1em;">
+                <a class="nav-link btn-outline-primary" href="profile.php">Edit Profile</a>
+            </li>
+            <li class="nav-item" style="margin-bottom: 1em;">
+                <a class="nav-link btn-outline-primary" href="myposts.php">My Posts</a>
+            </li>
+            <li class="nav-item" style="margin-bottom: 1em;">
+                <a class="nav-link btn-outline-primary active" href="savedposts.php">Saved Posts</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container col-md-10">
         <div class="col-10 shadow">
             <div class="card mb-3">
                 <div class="row no-gutters">

@@ -21,9 +21,8 @@ $myPosts = $postDao->list($post);
 
 <body>
 <?php require_once 'components/navbar.php' ?>
-<div class="container">
-    <div class="row" style="padding-top: 3em;">
-        <div class="col-2">
+    <div class="row pt-5">
+        <div class="col-md-2">
             <ul class="nav nav-pills nav-fill flex-column">
                 <li class="nav-item" style="margin-bottom: 1em;">
                     <a class="nav-link btn-outline-primary" href="profile.php">Edit Profile</a>
@@ -37,7 +36,7 @@ $myPosts = $postDao->list($post);
             </ul>
         </div>
         
-        <div class="col-10">
+        <div class="container col-md-10">
             <form class="form-inline" style="padding-bottom: 3em;">
                 <div class="form-row ml-5">
                     <select id="typeFilter" class="form-control form-control">
