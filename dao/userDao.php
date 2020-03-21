@@ -76,7 +76,7 @@ class UserDao
         if ($stmt->execute()) {
             $flag = true;
         }
-//        $stmt->close();
+        $stmt->close();
         $con->close();
         return $flag;
     }
