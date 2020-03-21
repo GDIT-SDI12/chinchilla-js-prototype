@@ -10,7 +10,6 @@ $errors = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $user->getUsername();
-    echo $username;
     //Password in db
     $password = $user->getPassword();
     //Entered current password for check
@@ -52,8 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userDao->update($updatedUser);
         $_SESSION['user'] = serialize($userDao->find($username));
         header("location: /profile.php");
-    } else {
-        // Errors processing
     }
 }
 
@@ -154,6 +151,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                         </div>
+                        <?php if (!empty($errors)) {
+                            echo '<div class="alert alert-danger">';
+                            foreach ($errors as $error)
+                                echo '<p>' . $error . '</p>';
+                            echo '</div>';
+                        } ?>
                         <div>
                             <input type="submit" class="btn btn-default btn-outline-primary inline float-right" value="Save">
                         </div>
