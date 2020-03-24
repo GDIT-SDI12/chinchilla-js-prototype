@@ -18,6 +18,7 @@ if (!empty($_POST['CreateNewPost'])) {
     $author = unserialize($_SESSION['user']);
     if ($author == null) {
         header('location: logout.php');
+        exit;
     }
 
     $newPost = new Post();
@@ -29,22 +30,26 @@ if (!empty($_POST['CreateNewPost'])) {
         $newPost->setType($type);
     } else {
         header('location: myposts.php');
+        exit;
     }
     if (!empty($title)) {
         $newPost->setTitle($title);
     } else {
         header('location: myposts.php');
+        exit;
     }
     if (!empty($description)) {
         $newPost->setBody($description);
     } else {
         header('location: myposts.php');
+        exit;
     }
     $newPost->setAuthor($author);
 
     $postDao = new PostDao();
     $postDao->create($newPost);
     header('location: myposts.php');
+    exit;
 }
 
 ?>

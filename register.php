@@ -54,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user->setRole('user');
         $userDao->create($user);
         header("location: /login.php");
+        exit;
     }
 }
 ?>

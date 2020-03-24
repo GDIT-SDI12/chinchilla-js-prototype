@@ -51,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userDao->update($updatedUser);
         $_SESSION['user'] = serialize($userDao->find($username));
         header("location: /profile.php");
+        exit;
     }
 }
 
