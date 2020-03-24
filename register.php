@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($errors)) {
-        $user->setRole('user');
+        $user->setRole('User');
         $userDao->create($user);
         header("location: /login.php");
     }
@@ -119,7 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-group" style="float: right;">
             <button class="btn btn-primary inline">Reset</button>
             <button type="submit" class="btn btn-outline-primary inline">
-            Create Account</button>
+                Create Account
+            </button>
         </div>
     </form>
 </div>

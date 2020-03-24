@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Invalid credentials";
     } else {
         $_SESSION['user'] = serialize($user);
-        if ($user->getRole() == 1) {
+        if ($user->getRole() == "Admin") {
             header("location: managerPanel.php");
         } else {
             header("location: feed.php");

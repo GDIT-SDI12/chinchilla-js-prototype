@@ -29,15 +29,18 @@ class PostDao
             if (null !== $post->getAuthor()) {
                 $sql .= " and author = '" . $post->getAuthor() . "'";
             } else {
-                // default display only approved posts
-                $sql .= " and approved_at is not null";
-            }
-
-            if (null !== $post->getApprovedAt()) {
-                if ($post->getApprovedAt() !== "ALL") {
-                    // don't know what to do yet
+                if (null !== $post->getApprovedAt()) {
+                    // For moderators.
+                    // By default, they see posts which are not approved
+                    if ($post->getApprovedAt() == "NULL") {
+                        $sql .= " and approved_at is NULL";
+                    }
+                } else {
+                    // default display only approved posts
+                    $sql .= " and approved_at is not null";
                 }
             }
+
 
             if (null !== $post->getOrderBy()) {
                 $sql .= " order by created_at " . $post->getOrderBy();
