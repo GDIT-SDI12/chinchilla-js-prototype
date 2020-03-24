@@ -90,33 +90,34 @@ if (!empty($_POST['CreateNewPost'])) {
 
         <!-- contents -->
         <?php foreach ($myPosts as $myPost) { ?>
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-4 p-2">
-                        <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $myPost->getTitle(); ?></h5>
-                            <p class="card-text"><?= $myPost->getBody(); ?></p>
+            <div class="col-10 shadow">
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 p-2">
+                            <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-outline-primary btn-block">Edit</button>
-                            <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
-                            <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $myPost->getTitle(); ?></h5>
+                                <p class="card-text"><?= $myPost->getBody(); ?></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-footer col">
-                        <p class="card-text text-right mr-3"><small class="text-muted">Approved
-                                last <?= $myPost->getApprovedAt(); ?></small></p>
+                        <div class="col-md-2">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-outline-primary btn-block">Edit</button>
+                                <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
+                                <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
+                            </div>
+                        </div>
+                        <div class="card-footer col">
+                            <p class="card-text text-right mr-3"><small class="text-muted">Approved
+                                    last <?= $myPost->getApprovedAt(); ?></small></p>
+                        </div>
                     </div>
                 </div>
             </div>
         <?php } ?>
     </div>
-</div>
 </div>
 </body>
 </html>
