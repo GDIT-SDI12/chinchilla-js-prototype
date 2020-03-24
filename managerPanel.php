@@ -14,9 +14,9 @@ if ($user->getRole() !== "Admin") {
 }
 
 $postDao = new PostDao();
-$criterias = new Post();
-$criterias->setApprovedAt('NULL');
-$posts = $postDao->list($criterias);
+$criteria = new Post();
+$criteria->setApprovedAt('NULL');
+$posts = $postDao->list($criteria);
 
 ?>
 <!DOCTYPE html>
@@ -41,21 +41,34 @@ $posts = $postDao->list($criterias);
             <button type="button" class="btn btn-primary ml-2">Filter</button>
         </div>
     </form>
-    <div class="row row-cols-1 row-cols-md-2" style="padding-top: 3em;">
+    <div class="container pt-5">
 
+        <!-- contents -->
         <?php foreach ($posts as $post) { ?>
-            <div class="col mb-4">
-                <div class="card">
-                    <div>
-                        <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
-                    </div>
-                    <div class="card-body">
-                        <a href="#">
-                            <h5 class="card-title"><?= $post->getTitle(); ?></h5>
-                        </a>
-                        <p class="card-text"><?= $post->getBody(); ?></p>
-                        <p class="card-text text-right"><small
-                                    class="text-muted">Posted <?= $post->getCreatedAt(); ?></small></p>
+            <div class="col shadow">
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 p-2">
+                            <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $post->getTitle(); ?></h5>
+                                <p class="card-text"><?= $post->getBody(); ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-outline-success btn-block approve"
+                                        id="<?= $post->getId(); ?>">Approve
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-block">Reject</button>
+                            </div>
+                        </div>
+                        <div class="card-footer col">
+                            <p class="card-text text-right mr-3"><small
+                                        class="text-muted">Posted: <?= $post->getCreatedAt(); ?></small></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,5 +76,7 @@ $posts = $postDao->list($criterias);
     </div>
 </div>
 </body>
+
+<script type="text/javascript" src="js/js.js"></script>
 
 </html>

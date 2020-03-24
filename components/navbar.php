@@ -1,7 +1,7 @@
 <?php
 include_once './entity/User.php';
 $session_user = new User();
-if(isset($_SESSION['user'])) {
+if (isset($_SESSION['user'])) {
     $session_user = unserialize($_SESSION['user']);
 }
 // echo $user->getUsername();
@@ -15,7 +15,12 @@ if(isset($_SESSION['user'])) {
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <!-- The $user variable (is/should be) declared from the php file that included this file -->
-            <?php if(isset($session_user) && (null !== $session_user->getUsername())) {?>
+            <?php if (isset($session_user) && (null !== $session_user->getUsername())) { ?>
+                <?php if ($session_user->getRole() == "Admin") { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="managerPanel.php">Management Panel</a>
+                    </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link" href="profile.php">Profile</a>
                 </li>

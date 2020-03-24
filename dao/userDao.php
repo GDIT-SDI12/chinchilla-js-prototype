@@ -24,7 +24,6 @@ class UserDao
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 if ($row = $result->fetch_array()) {
-                    $user = new User();
                     $user->setUsername($row['username']);
                     $user->setPassword($row['password']);
                     $user->setFirstName($row['first_name']);
