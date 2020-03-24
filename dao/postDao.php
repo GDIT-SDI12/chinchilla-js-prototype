@@ -29,15 +29,18 @@ class PostDao
             if (null !== $post->getAuthor()) {
                 $sql .= " and author = '" . $post->getAuthor() . "'";
             } else {
-                // default display only approved posts
-                $sql .= " and approved_at is not null";
-            }
-
-            if (null !== $post->getApprovedAt()) {
-                if ($post->getApprovedAt() !== "ALL") {
-                    // don't know what to do yet
+                if (null !== $post->getApprovedAt()) {
+                    // For moderators.
+                    // By default, they see posts which are not approved
+                    if ($post->getApprovedAt() == "NULL") {
+                        $sql .= " and approved_at is NULL";
+                    }
+                } else {
+                    // default display only approved posts
+                    $sql .= " and approved_at is not null";
                 }
             }
+
 
             if (null !== $post->getOrderBy()) {
                 $sql .= " order by created_at " . $post->getOrderBy();
@@ -71,6 +74,96 @@ class PostDao
         return $list;
     }
 
+    public function find($id)
+    {
+        $sql = "select 
+                    p.id, p.author, p.body, p.title,
+                    p.created_at, p.expiry_date, p.approved_at,
+                    p.is_active, pt.type
+                from " . $this->table . " as p
+                inner join post_types as pt on p.type = pt.id
+                where p.id = ?";
+        $post = new Post();
+        $con = $this->db->getConnection();
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("i", $p_id);
+
+        $p_id = $id;
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                if ($row = $result->fetch_array()) {
+                    $post->setId($row['id']);
+                    $post->setAuthor($row['author']);
+                    $post->setTitle($row['title']);
+                    $post->setBody($row['body']);
+                    $post->setCreatedAt($row['created_at']);
+                    $post->setExpiredAt($row['expiry_date']);
+                    $post->setApprovedAt($row['approved_at']);
+                    $post->setActive($row['is_active']);
+                    $post->setType($row['type']);
+                }
+            } else {
+                //echo "cannot find user [" . $user->getUsername() . "]";
+                $post = null;
+            }
+            $stmt->close();
+        } else {
+            //echo "couldn't execute sql: " . $sql . " error: " . $con->error;
+            $post = null;
+        }
+        $con->close();
+        return $post;
+    }
+
+    public function update($post)
+    {
+        $flag = false;
+
+        $sql = "update " . $this->table .
+            " set
+                    body = ?,
+                    title = ?,
+                    expiry_date = ?,
+                    approved_at = ?,
+                    is_active = ?,
+                    type = (select id from " . $this->postTypesTable . " where type = ?)
+                where id = ?";
+
+        $con = $this->db->getConnection();
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("ssssisi",
+            $p_body,
+            $p_title,
+            $p_approvedAt,
+            $p_expiryDate,
+            $p_isActive,
+            $p_type,
+            $p_id
+        );
+
+        $p_id = $post->getId();
+//        $p_author = $post->getAuthor();
+        $p_body = $post->getBody();
+        $p_title = $post->getTitle();
+//        $p_createdAt = $post->getCreatedAt();
+        $p_expiryDate = $post->getExpiredAt();
+        $p_approvedAt = $post->getApprovedAt();
+        $p_isActive = $post->isActive();
+        $p_type = $post->getType();
+
+        if ($stmt->execute()) {
+            $flag = true;
+        } else {
+            echo "postDao update(post): couldn't execute sql: " . $sql . " error: " . $con->error;
+            exit();
+        }
+        $stmt->close();
+        $con->close();
+        return $flag;
+    }
+
     public function create($post)
     {
         $flag = false;
@@ -89,12 +182,12 @@ class PostDao
 //                $p_expiryDate
         );
 
-        $p_author = $post->getAuthor()->getUsername();
+        $p_author = $post->getAuthor();
         $p_body = $post->getBody();
         $p_title = $post->getTitle();
         $p_type = $post->getType();
-//            $p_createdAt = $date = date('Y-m-d H:i:s');
-//            $p_expiryDate = $post->getEmail();
+//            $p_createdAt = $dat;
+//            $p_expiryDate = $post->;
 
         if ($stmt->execute()) {
             $flag = true;

@@ -4,7 +4,6 @@ include_once './commons/db.php';
 include_once './entity/Post.php';
 include_once './entity/User.php';
 include_once './dao/postDao.php';
-include_once './components/createPostModal.php';
 
 $postDao = new PostDao();
 $post = new Post();
@@ -44,7 +43,7 @@ if (!empty($_POST['CreateNewPost'])) {
         header('location: myposts.php');
         exit;
     }
-    $newPost->setAuthor($author);
+    $newPost->setAuthor($author->getUsername());
 
     $postDao = new PostDao();
     $postDao->create($newPost);
@@ -125,5 +124,8 @@ if (!empty($_POST['CreateNewPost'])) {
         <?php } ?>
     </div>
 </div>
+<?php
+include_once './components/createPostModal.php';
+?>
 </body>
 </html>
