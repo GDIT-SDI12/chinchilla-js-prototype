@@ -25,8 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user'] = serialize($user);
         if ($user->getRole() == "Admin") {
             header("location: managerPanel.php");
+            exit;
         } else {
             header("location: feed.php");
+            exit;
         }
     }
 }
