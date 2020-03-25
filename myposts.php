@@ -57,8 +57,7 @@ if (!empty($_POST['CreateNewPost'])) {
 
     // create user directory if it doesn't exist
     if(!file_exists($target_dir)) {
-        $testdir = $_SERVER['DOCUMENT_ROOT'] . "/" . basename(getcwd()) 
-                . "/uploads/" . $author->getUsername();
+        $testdir = getcwd() .  DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $author->getUsername();
         mkdir($testdir, 0777, true);
     }
 
