@@ -17,7 +17,7 @@ $postTypes = $postDao->getTypes();
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <form method="POST" action="">
+                    <form method="POST" action="" enctype="multipart/form-data">
                         <div class="form-group row">
                             <label for="postType" class="col-sm-3 col-form-label">Post type</label>
                             <div class="col-sm-9">
@@ -40,17 +40,16 @@ $postTypes = $postDao->getTypes();
                                 <textarea class="form-control" name="description"></textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <input id="fileToUpload" name="fileToUpload" type="file" class="file" data-show-upload="true" data-show-caption="true">
+                            <img id="image" />
+                        </div>
                         <?php if (!empty($errors)) {
                             echo '<div class="alert alert-danger">';
                             foreach ($errors as $error)
                                 echo '<p>' . $error . '</p>';
                             echo '</div>';
                         } ?>
-                        <!-- <div class="form-group">-->
-                        <!--     <input id="images" name="images[]" type="file" class="file" data-show-upload="true"-->
-                        <!--            data-show-caption="true" multiple>-->
-                        <!--     <img id="image" />-->
-                        <!-- </div>-->
                         <hr/>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <input type="submit" class="btn btn-primary" name="CreateNewPost" value="Post"/>
