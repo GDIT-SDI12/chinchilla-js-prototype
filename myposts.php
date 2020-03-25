@@ -3,7 +3,9 @@ include_once './commons/validatesession.php';
 include_once './commons/db.php';
 include_once './entity/Post.php';
 include_once './entity/User.php';
+include_once './entity/Image.php';
 include_once './dao/postDao.php';
+include_once './dao/imageDao.php';
 
 $postDao = new PostDao();
 $post = new Post();
@@ -47,6 +49,57 @@ if (!empty($_POST['CreateNewPost'])) {
 
     $postDao = new PostDao();
     $postId = $postDao->create($newPost);
+    
+    // upload image part
+    $target_dir = "uploads/" . $author->getUsername() . "/";
+    $target_name = $author->getUsername() . "_" . time() . "_1." . pathinfo(basename($_FILES["fileToUpload"]["name"]), PATHINFO_EXTENSION);
+    $target_file = $target_dir . $target_name;;
+
+    // create user directory if it doesn't exist
+    if(!file_exists($target_dir)) {
+        $testdir = $_SERVER['DOCUMENT_ROOT'] . "/" . basename(getcwd()) 
+                . "/uploads/" . $author->getUsername();
+        mkdir($testdir, 0777, true);
+    }
+
+    // Check if image file is a actual image or fake image
+    $uploadFlag = 0;
+    if(isset($_POST["CreateNewPost"])) {
+        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        if($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            $uploadFlag = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadFlag = 0;
+        }
+    }
+
+    $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"],PATHINFO_EXTENSION));
+
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+        echo "Sorry, only JPG, JPEG, & PNG files are allowed.";
+        $uploadFlag = 0;
+    }
+
+    // Check if $uploadFlag is set to 0 by an error
+    if ($uploadFlag == 0) {
+        echo "Sorry, your file was not uploaded.";
+    } else { // if everything is ok, try to upload file
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            echo "The file " . basename( $_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+            // insert to images table
+            $image = new Image();
+            $image->setPost($postId);
+            $image->setFilename($target_name);
+            $imageDao = new ImageDao();
+            $imageDao->create($image);
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
+
     header('location: myposts.php');
     exit;
 }
