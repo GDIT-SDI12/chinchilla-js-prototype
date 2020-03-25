@@ -63,7 +63,7 @@ function getRandomImage() {
                         <?php } ?>
                     </div>
                     <div class="card-body">
-                        <a href="#">
+                        <a href="post.php/?post=<?=$post->getId(); ?>">
                             <h5 class="card-title"><?= $post->getTitle(); ?></h5>
                         </a>
                         <p class="card-text"><?= $post->getBody(); ?></p>
