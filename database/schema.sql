@@ -52,3 +52,5 @@ CREATE TABLE images (
   KEY `images_FK_posts` (`post_id`),
   CONSTRAINT `images_FK_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+ALTER TABLE chinchilla.images ADD CONSTRAINT images_UN UNIQUE KEY (post_id,filename);
