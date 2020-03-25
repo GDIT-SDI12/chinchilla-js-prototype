@@ -44,3 +44,11 @@ CREATE TABLE posts
     CONSTRAINT `posts_FK_users` FOREIGN KEY (`author`) REFERENCES `users` (`username`) ON UPDATE CASCADE,
     FOREIGN KEY (type) REFERENCES post_types(id)
 );
+
+
+CREATE TABLE images (
+  `post_id` int(11) NOT NULL,
+  `filename` varchar(100) NOT NULL,
+  KEY `images_FK_posts` (`post_id`),
+  CONSTRAINT `images_FK_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
