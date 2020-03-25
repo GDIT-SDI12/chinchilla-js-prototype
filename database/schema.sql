@@ -1,5 +1,6 @@
 -- Drop tables
 
+DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS post_types;
 DROP TABLE IF EXISTS users;
