@@ -85,9 +85,10 @@ class PostDao
         $sql = "select 
                     p.id, p.author, p.body, p.title,
                     p.created_at, p.expiry_date, p.approved_at,
-                    p.is_active, pt.type
+                    p.is_active, pt.type, group_concat(i.filename) 'images'
                 from " . $this->table . " as p
                 inner join post_types as pt on p.type = pt.id
+                join images as i on i.post_id = p.id
                 where p.id = ?";
         $post = new Post();
         $con = $this->db->getConnection();
@@ -109,6 +110,10 @@ class PostDao
                     $post->setApprovedAt($row['approved_at']);
                     $post->setActive($row['is_active']);
                     $post->setType($row['type']);
+                    if(isset($row['images'])) {
+                        $images = explode(',', $row['images']);
+                        $post->setImages($images);
+                    }
                 }
             } else {
                 //echo "cannot find user [" . $user->getUsername() . "]";

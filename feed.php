@@ -59,11 +59,11 @@ function getRandomImage() {
                         <?php if (null !== $post->getImages()) { ?>
                             <img src="<?= "uploads/" . str_replace("#DS#", DIRECTORY_SEPARATOR, array_values($post->getImages())[0]) ?>" class="card-img-top p-3 p-3" alt="...">
                         <?php } else { ?>
-                            <img src="https://cataas.com/cat" class="card-img-top p-3 p-3" alt="...">
+                            <img src="http://via.placeholder.com/640x360" class="card-img-top p-3 p-3" alt="...">
                         <?php } ?>
                     </div>
                     <div class="card-body">
-                        <a href="#">
+                        <a href="post.php/?post=<?=$post->getId(); ?>">
                             <h5 class="card-title"><?= $post->getTitle(); ?></h5>
                         </a>
                         <p class="card-text"><?= $post->getBody(); ?></p>
