@@ -12,17 +12,9 @@ $post = new Post();
 
 if ($user->getRole() !== "Admin") {
     http_response_code(403);
-    $result = array(
-        'message' => 'dzgfsdgsdf'
-    );
-    echo json_encode($result);
 } else {
     $postDao = new PostDao();
     $post = $postDao->find($_POST['id']);
     $post->setApprovedAt(date('Y-m-d H:i:s'));
     $postDao->update($post);
-    $result = array(
-        'message' => 'Post has been approved'
-    );
-    echo json_encode($result);
 }

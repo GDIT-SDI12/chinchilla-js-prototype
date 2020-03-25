@@ -7,7 +7,7 @@ $(".approve").click(function (e) {
             id: $(this).attr('id')
         },
         success: function (result) {
-            console.log(result);
+            location.reload();
         },
         error: function (result) {
             console.log(result.responseText);
