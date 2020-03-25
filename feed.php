@@ -56,8 +56,11 @@ function getRandomImage() {
             <div class="col mb-4">
                 <div class="card">
                     <div>
-                        <!-- <img src="https://cataas.com/cat" class="card-img-top p-3 p-3" alt="..."> -->
-                        <?php echo getRandomImage(); ?>
+                        <?php if (null !== $post->getImages()) { ?>
+                            <img src="<?= "uploads/" . str_replace("#DS#", DIRECTORY_SEPARATOR, array_values($post->getImages())[0]) ?>" class="card-img-top p-3 p-3" alt="...">
+                        <?php } else { ?>
+                            <img src="https://cataas.com/cat" class="card-img-top p-3 p-3" alt="...">
+                        <?php } ?>
                     </div>
                     <div class="card-body">
                         <a href="#">

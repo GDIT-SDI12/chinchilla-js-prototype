@@ -13,7 +13,6 @@ $user = new User();
 $user = unserialize($_SESSION['user']);
 $post->setAuthor($user->getUsername());
 $myPosts = $postDao->list($post);
-$target_dir = "uploads/" . $user->getUsername() . "/";
 
 if (!empty($_POST['CreateNewPost'])) {
     $author = new User();
@@ -52,8 +51,9 @@ if (!empty($_POST['CreateNewPost'])) {
     $postId = $postDao->create($newPost);
     
     // upload image part
+    $target_dir = "uploads/" . $author->getUsername() . "/";
     $target_name = $author->getUsername() . "_" . time() . "_1." . pathinfo(basename($_FILES["fileToUpload"]["name"]), PATHINFO_EXTENSION);
-    $target_file = $target_dir . $target_name;;
+    $target_file = $target_dir . $target_name;
 
     // create user directory if it doesn't exist
     if(!file_exists($target_dir)) {
@@ -91,7 +91,7 @@ if (!empty($_POST['CreateNewPost'])) {
             // insert to images table
             $image = new Image();
             $image->setPost($postId);
-            $image->setFilename($target_name);
+            $image->setFilename($author->getUsername() . "#DS#" . $target_name);
             $imageDao = new ImageDao();
             $imageDao->create($image);
         } else {
@@ -152,7 +152,7 @@ if (!empty($_POST['CreateNewPost'])) {
                     <div class="row no-gutters">
                         <div class="col-md-4 p-2">
                             <?php if (null !== $myPost->getImages()) { ?>
-                                <img src="<?= $target_dir . array_values($myPost->getImages())[0] ?>" class="card-img" alt="...">
+                                <img src="<?= "uploads/" . str_replace("#DS#", DIRECTORY_SEPARATOR, array_values($myPost->getImages())[0]) ?>" class="card-img" alt="...">
                             <?php } else { ?>
                                 <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
                             <?php } ?>
