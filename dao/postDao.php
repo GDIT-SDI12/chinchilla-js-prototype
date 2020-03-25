@@ -166,7 +166,7 @@ class PostDao
 
     public function create($post)
     {
-        $flag = false;
+        $insertId = 0;
 
         $sql = "insert into " . $this->table . " (author, body, title, type)"
             . " values (?, ?, ?, (select id from " . $this->postTypesTable . " where type = ?))";
@@ -190,14 +190,14 @@ class PostDao
 //            $p_expiryDate = $post->;
 
         if ($stmt->execute()) {
-            $flag = true;
+            $insertId = $con->insert_id;
         } else {
             echo "postDao create(post): couldn't execute sql: " . $sql . " error: " . $con->error;
             exit();
         }
         $stmt->close();
         $con->close();
-        return $flag;
+        return $insertId;
     }
 
     public function getTypes()

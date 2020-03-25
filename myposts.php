@@ -46,7 +46,7 @@ if (!empty($_POST['CreateNewPost'])) {
     $newPost->setAuthor($author->getUsername());
 
     $postDao = new PostDao();
-    $postDao->create($newPost);
+    $postId = $postDao->create($newPost);
     header('location: myposts.php');
     exit;
 }
