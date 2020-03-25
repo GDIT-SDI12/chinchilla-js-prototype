@@ -9,6 +9,7 @@
         private $expiredAt;
         private $isActive;
         private $type;
+        private $images;
 
         //for sql query
         private $orderBy;
@@ -83,6 +84,14 @@
 
         public function setType($type) {
             $this->type = $type;
+        }
+
+        public function getImages() {
+            return $this->images;
+        }
+
+        public function setImages($images) {
+            $this->images = $images;
         }
 
         public function getOrderBy() {

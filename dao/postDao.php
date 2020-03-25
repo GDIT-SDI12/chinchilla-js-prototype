@@ -14,8 +14,9 @@ class PostDao
     public function list($post)
     {
         $list = array();
-        $sql = "select * from " . $this->table
-            . " where 1 = 1";
+        $sql = "select *,
+                (select group_concat(filename) from images where post_id = id) as images 
+                from " . $this->table . " where 1 = 1";
 
         if (isset($post)) {
             if (null !== $post->getId()) {
@@ -64,6 +65,11 @@ class PostDao
                     $post->setExpiredAt($row['expiry_date']);
                     $post->setActive($row['is_active']);
                     $post->setType($row['type']);
+                    if(isset($row['images'])) {
+                        $images = explode(',', $row['images']);
+                        $post->setImages($images);
+                    }
+
                     array_push($list, $post);
                 }
             }
