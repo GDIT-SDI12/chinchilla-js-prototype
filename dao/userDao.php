@@ -3,6 +3,7 @@
 class UserDao
 {
     private $table = "users";
+    private $savedPostsTable = "saved_posts";
     private $db;
 
     public function __construct()
@@ -12,13 +13,14 @@ class UserDao
 
     public function find($username)
     {
-        $sql = "select * from " . $this->table . " where username = ?;";
+        $sql = "select
+                *, 
+                (select group_concat(post_id) from " . $this->savedPostsTable . " where username = ?) as saved_posts
+                from " . $this->table . " where username = ?";
         $user = new User();
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("s", $p_username);
-
-        $p_username = $username;
+        $stmt->bind_param("ss", $username, $username);
 
         if ($stmt->execute()) {
             $result = $stmt->get_result();
@@ -31,6 +33,10 @@ class UserDao
                     $user->setPhoneNumber($row['phone_number']);
                     $user->setEmail($row['email']);
                     $user->setRole($row['role']);
+                    if (isset($row['saved_posts'])) {
+                        $savedPosts = explode(',', $row['saved_posts']);
+                        $user->setSavedPosts($savedPosts);
+                    }
                 }
             } else {
                 //echo "cannot find user [" . $user->getUsername() . "]";
@@ -38,7 +44,7 @@ class UserDao
             }
             $stmt->close();
         } else {
-            //echo "couldn't execute sql: " . $sql . " error: " . $con->error;
+//            echo "couldn't execute sql: " . $sql . " error: " . $con->error;
             $user = null;
         }
         $con->close();
@@ -103,6 +109,82 @@ class UserDao
         $p_email = $user->getEmail();
         $p_phoneNumber = $user->getPhoneNumber();
         $p_role = $user->getRole();
+
+        if ($stmt->execute()) {
+            $flag = true;
+        }
+        $stmt->close();
+        $con->close();
+
+        foreach ($user->getSavedPosts() as $postId) {
+            $flag = $this->savePost($p_username, $postId);
+            if (!$flag) {
+                return $flag;
+            }
+        }
+
+        return $flag;
+    }
+
+    private function listSavedPostsIds($username)
+    {
+        $idList = null;
+
+        $sql = "select id from " . $this->savedPostsTable . " where username = ?";
+
+        $con = $this->db->getConnection();
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("s", $username);
+
+        if ($result = $con->query($sql)) {
+            if ($result->num_rows > 0) {
+                $idList = [];
+                while ($row = $result->fetch_array()) {
+                    $idList[] = $row['id'];
+                }
+            }
+        } else {
+            echo "userDao listSavedPosts(): couldn't execute sql: " . $sql . " error: " . $con->error;
+        }
+        $con->close();
+
+        return $idList;
+    }
+
+    private function savePost($username, $postId)
+    {
+        $flag = false;
+
+        $sql = "insert into " . $this->savedPostsTable . " (username, postId)"
+            . " values (?, ?)";
+
+        $con = $this->db->getConnection();
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("si",
+            $username,
+            $posdId
+        );
+
+        if ($stmt->execute()) {
+            $flag = true;
+        }
+        $stmt->close();
+        $con->close();
+        return $flag;
+    }
+
+    private function removeSavedPost($username, $postId)
+    {
+        $flag = false;
+
+        $sql = "DELETE FROM " . $this->savedPostsTable . " WHERE username = ? AND post_id = ?";
+
+        $con = $this->db->getConnection();
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("si",
+            $username,
+            $posdId
+        );
 
         if ($stmt->execute()) {
             $flag = true;

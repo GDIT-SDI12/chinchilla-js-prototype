@@ -81,18 +81,29 @@ class User
         $this->role = $role;
     }
 
-    public function savePost($postId)
+    public function getSavedPosts()
+    {
+        return $this->savedPosts;
+    }
+
+    public function setSavedPosts($postIds)
+    {
+        $this->savedPosts = $postIds;
+    }
+
+    public function addPosts(...$postIds)
     {
         if (null == $this->savedPosts) {
             $this->savedPosts = [];
         }
-        $this->savedPosts[$postId];
+        $this->savedPosts = array_merge($this->savedPosts, $postIds);
     }
 
-    public function removeSavedPost($postId)
+    public function subtractPosts(...$postIds)
     {
-        if (($key = array_search($postId, $this->savedPosts)) !== false) {
-            unset($this->savedPosts[$key]);
+        if (null == $this->savedPosts) {
+            return;
         }
+        $this->savedPosts = array_diff($this->savedPosts, $postIds);
     }
 }
