@@ -46,6 +46,7 @@ if (!empty($_POST['CreateNewPost'])) {
         exit;
     }
     $newPost->setAuthor($author->getUsername());
+    $newPost->setCreatedAt(date('Y-m-d H:i:s'));
 
     $postDao = new PostDao();
     $postId = $postDao->create($newPost);
