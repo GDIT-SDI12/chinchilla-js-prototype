@@ -49,23 +49,23 @@ if (!empty($_POST['CreateNewPost'])) {
 
     $postDao = new PostDao();
     $postId = $postDao->create($newPost);
-    
+
     // upload image part
     $target_dir = "uploads/" . $author->getUsername() . "/";
     $target_name = $author->getUsername() . "_" . time() . "_1." . pathinfo(basename($_FILES["fileToUpload"]["name"]), PATHINFO_EXTENSION);
     $target_file = $target_dir . $target_name;
 
     // create user directory if it doesn't exist
-    if(!file_exists($target_dir)) {
-        $testdir = getcwd() .  DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $author->getUsername();
+    if (!file_exists($target_dir)) {
+        $testdir = getcwd() . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $author->getUsername();
         mkdir($testdir, 0777, true);
     }
 
     // Check if image file is a actual image or fake image
     $uploadFlag = 0;
-    if(isset($_POST["CreateNewPost"])) {
+    if (isset($_POST["CreateNewPost"])) {
         $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if($check !== false) {
+        if ($check !== false) {
             echo "File is an image - " . $check["mime"] . ".";
             $uploadFlag = 1;
         } else {
@@ -74,10 +74,10 @@ if (!empty($_POST['CreateNewPost'])) {
         }
     }
 
-    $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"],PATHINFO_EXTENSION));
+    $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
 
     // Allow certain file formats
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
         echo "Sorry, only JPG, JPEG, & PNG files are allowed.";
         $uploadFlag = 0;
     }
@@ -87,7 +87,7 @@ if (!empty($_POST['CreateNewPost'])) {
         echo "Sorry, your file was not uploaded.";
     } else { // if everything is ok, try to upload file
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            echo "The file " . basename( $_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+            echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
             // insert to images table
             $image = new Image();
             $image->setPost($postId);
@@ -152,7 +152,8 @@ if (!empty($_POST['CreateNewPost'])) {
                     <div class="row no-gutters">
                         <div class="col-md-4 p-2">
                             <?php if (null !== $myPost->getImages()) { ?>
-                                <img src="<?= "uploads/" . str_replace("#DS#", DIRECTORY_SEPARATOR, array_values($myPost->getImages())[0]) ?>" class="card-img" alt="...">
+                                <img src="<?= "uploads/" . str_replace("#DS#", DIRECTORY_SEPARATOR, array_values($myPost->getImages())[0]) ?>"
+                                     class="card-img" alt="...">
                             <?php } else { ?>
                                 <img src="http://via.placeholder.com/640x360" class="card-img" alt="...">
                             <?php } ?>
@@ -165,7 +166,7 @@ if (!empty($_POST['CreateNewPost'])) {
                         </div>
                         <div class="col-md-2">
                             <div class="card-body">
-                                <button type="button" class="btn btn-outline-primary btn-block">Edit</button>
+                                <a type="button" class="btn btn-outline-primary btn-block" href="post.php?post=<?=$myPost->getId(); ?>">Edit</a>
                                 <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
                                 <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
                             </div>
