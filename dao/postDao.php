@@ -85,15 +85,14 @@ class PostDao
         $sql = "select 
                     p.id, p.author, p.body, p.title,
                     p.created_at, p.expiry_date, p.approved_at,
-                    p.is_active, pt.type, group_concat(i.filename) 'images'
-                from " . $this->table . " as p
-                inner join post_types as pt on p.type = pt.id
-                join images as i on i.post_id = p.id
-                where p.id = ? group by p.id";
+                    p.is_active, (select pt.type from post_types pt where pt.id = p.type) as type,
+                    (select group_concat(filename) from images where post_id = id) as images
+                from posts p where p.id = ?";
         $post = new Post();
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
-        echo $con->error;
+        // echo $con->error;
+        
         $stmt->bind_param("i", $p_id);
 
         $p_id = $id;
@@ -102,6 +101,7 @@ class PostDao
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 if ($row = $result->fetch_array()) {
+                    
                     $post->setId($row['id']);
                     $post->setAuthor($row['author']);
                     $post->setTitle($row['title']);
@@ -232,5 +232,3 @@ class PostDao
         return $types;
     }
 }
-
-?>
