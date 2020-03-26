@@ -90,7 +90,8 @@ class UserDao
     {
         $flag = false;
 
-        $sql = "UPDATE " . $this->table . " SET password = ?, first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE username = ?";
+        $sql = "UPDATE " . $this->table . "
+                SET password = ?, first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE username = ?";
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
         $stmt->bind_param("ssssss",
@@ -116,53 +117,21 @@ class UserDao
         $stmt->close();
         $con->close();
 
-        foreach ($user->getSavedPosts() as $postId) {
-            $flag = $this->savePost($p_username, $postId);
-            if (!$flag) {
-                return $flag;
-            }
-        }
-
         return $flag;
     }
 
-    private function listSavedPostsIds($username)
-    {
-        $idList = null;
-
-        $sql = "select id from " . $this->savedPostsTable . " where username = ?";
-
-        $con = $this->db->getConnection();
-        $stmt = $con->prepare($sql);
-        $stmt->bind_param("s", $username);
-
-        if ($result = $con->query($sql)) {
-            if ($result->num_rows > 0) {
-                $idList = [];
-                while ($row = $result->fetch_array()) {
-                    $idList[] = $row['id'];
-                }
-            }
-        } else {
-            echo "userDao listSavedPosts(): couldn't execute sql: " . $sql . " error: " . $con->error;
-        }
-        $con->close();
-
-        return $idList;
-    }
-
-    private function savePost($username, $postId)
+    public function savePost($username, $postId)
     {
         $flag = false;
 
-        $sql = "insert into " . $this->savedPostsTable . " (username, postId)"
+        $sql = "insert into " . $this->savedPostsTable . " (username, post_id)"
             . " values (?, ?)";
 
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
         $stmt->bind_param("si",
             $username,
-            $posdId
+            $postId
         );
 
         if ($stmt->execute()) {
@@ -173,7 +142,7 @@ class UserDao
         return $flag;
     }
 
-    private function removeSavedPost($username, $postId)
+    public function removeSavedPost($username, $postId)
     {
         $flag = false;
 
@@ -183,7 +152,7 @@ class UserDao
         $stmt = $con->prepare($sql);
         $stmt->bind_param("si",
             $username,
-            $posdId
+            $postId
         );
 
         if ($stmt->execute()) {

@@ -88,7 +88,7 @@ class User
 
     public function setSavedPosts($postIds)
     {
-        $this->savedPosts = $postIds;
+        $this->savedPosts = array_unique($postIds);
     }
 
     public function addPosts(...$postIds)
@@ -96,7 +96,7 @@ class User
         if (null == $this->savedPosts) {
             $this->savedPosts = [];
         }
-        $this->savedPosts = array_merge($this->savedPosts, $postIds);
+        $this->savedPosts = array_unique(array_merge($this->savedPosts, $postIds));
     }
 
     public function subtractPosts(...$postIds)
