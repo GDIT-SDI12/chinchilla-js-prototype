@@ -85,14 +85,14 @@ class PostDao
         $sql = "select 
                     p.id, p.author, p.body, p.title,
                     p.created_at, p.expiry_date, p.approved_at,
-                    p.is_active, pt.type, group_concat(i.filename) 'images'
-                from " . $this->table . " as p
-                inner join post_types as pt on p.type = pt.id
-                join images as i on i.post_id = p.id
-                where p.id = ?";
+                    p.is_active, (select pt.type from post_types pt where pt.id = p.type) as type,
+                    (select group_concat(filename) from images where post_id = id) as images
+                from posts p where p.id = ?";
         $post = new Post();
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
+        // echo $con->error;
+        
         $stmt->bind_param("i", $p_id);
 
         $p_id = $id;
@@ -101,6 +101,7 @@ class PostDao
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 if ($row = $result->fetch_array()) {
+                    
                     $post->setId($row['id']);
                     $post->setAuthor($row['author']);
                     $post->setTitle($row['title']);
@@ -147,8 +148,8 @@ class PostDao
         $stmt->bind_param("ssssisi",
             $p_body,
             $p_title,
-            $p_approvedAt,
             $p_expiryDate,
+            $p_approvedAt,
             $p_isActive,
             $p_type,
             $p_id
@@ -179,26 +180,26 @@ class PostDao
     {
         $insertId = 0;
 
-        $sql = "insert into " . $this->table . " (author, body, title, type)"
-            . " values (?, ?, ?, (select id from " . $this->postTypesTable . " where type = ?))";
+        $sql = "insert into " . $this->table . " (author, body, title, type, created_at, expiry_date)"
+            . " values (?, ?, ?, (select id from " . $this->postTypesTable . " where type = ?), ?, ?)";
 
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("ssss",
+        $stmt->bind_param("ssssss",
             $p_author,
             $p_body,
             $p_title,
-            $p_type
-//                $p_createdAt
-//                $p_expiryDate
+            $p_type,
+            $p_createdAt,
+            $p_expiryDate
         );
 
         $p_author = $post->getAuthor();
         $p_body = $post->getBody();
         $p_title = $post->getTitle();
         $p_type = $post->getType();
-//            $p_createdAt = $dat;
-//            $p_expiryDate = $post->;
+        $p_createdAt = $post->getCreatedAt();
+        $p_expiryDate = $post->getExpiredAt();
 
         if ($stmt->execute()) {
             $insertId = $con->insert_id;
@@ -231,5 +232,3 @@ class PostDao
         return $types;
     }
 }
-
-?>

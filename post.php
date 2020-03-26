@@ -38,7 +38,7 @@ if ($post == null) {
         <div class="col-md-4 my-5">
             <div>
                 <?php if (null !== $post->getImages()) { ?>
-                    <img src="<?= DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . str_replace("#DS#", DIRECTORY_SEPARATOR, array_values($post->getImages())[0]) ?>"
+                    <img src="<?= "uploads" . DIRECTORY_SEPARATOR . str_replace("#DS#", DIRECTORY_SEPARATOR, array_values($post->getImages())[0]) ?>"
                          class="card-img-top p-3 p-3">
                 <?php } else { ?>
                     <img src="http://via.placeholder.com/640x360" class="card-img-top p-3 p-3" alt="...">

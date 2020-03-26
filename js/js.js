@@ -2,7 +2,7 @@ $(".approve").click(function (e) {
     e.preventDefault();
     $.ajax({
         type: "POST",
-        url: "/approve.php",
+        url: "./approve.php",
         data: {
             id: $(this).attr('id')
         },
