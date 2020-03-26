@@ -7,12 +7,36 @@ include_once './entity/Image.php';
 include_once './dao/postDao.php';
 include_once './dao/imageDao.php';
 
-$postDao = new PostDao();
-$post = new Post();
 $user = new User();
 $user = unserialize($_SESSION['user']);
-$post->setAuthor($user->getUsername());
-$myPosts = $postDao->list($post);
+
+$postFilter = new Post();
+$typeFilter = "";
+$sortFilter = "";
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+    if (isset($_GET["typeFilter"])) {
+        $typeFilter = $_GET["typeFilter"];
+    }
+
+    if (isset($_GET["sortFilter"])) {
+        $sortFilter = $_GET["sortFilter"];
+    }
+
+    if ($typeFilter == "job") {
+        $postFilter->setType(1);
+    } else if ($typeFilter == "rent") {
+        $postFilter->setType(2);
+    }
+
+    if ($sortFilter == "asc") {
+        $postFilter->setOrderBy($sortFilter);
+    }
+}
+
+$postDao = new PostDao();
+$postFilter->setAuthor($user->getUsername());
+$myPosts = $postDao->list($postFilter);
 
 if (!empty($_POST['CreateNewPost'])) {
     $author = new User();
@@ -129,18 +153,28 @@ if (!empty($_POST['CreateNewPost'])) {
     </div>
 
     <div class="container col-md-10">
-        <form class="form-inline" style="padding-bottom: 3em;">
+        <form action="myposts.php" method="GET" class="form-inline" style="padding-bottom: 3em;">
             <div class="form-row ml-5">
-                <select id="typeFilter" class="form-control form-control">
-                    <option>All (Default)</option>
-                    <option>Jobs</option>
-                    <option>Rent</option>
+                <select id="typeFilter" name="typeFilter" class="form-control form-control">
+                    <option value="all" <?= $typeFilter == "all" ? 'selected' : ''; ?>>
+                        All (Default)
+                    </option>
+                    <option value="job" <?= $typeFilter == "job" ? 'selected' : ''; ?>>
+                        Jobs
+                    </option>
+                    <option value="rent" <?= $typeFilter == "rent" ? 'selected' : ''; ?>>
+                        Rent
+                    </option>
                 </select>
-                <select id="sortFilter" class="form-control form-control ml-2">
-                    <option>Newest - Oldest (Descending)</option>
-                    <option>Oldest - Newest (Ascending)</option>
+                <select id="sortFilter" name="sortFilter" class="form-control form-control ml-2">
+                    <option value="desc" <?= $sortFilter == "desc" ? 'selected' : ''; ?>>
+                        Newest - Oldest (Descending)
+                    </option>
+                    <option value="asc" <?= $sortFilter == "asc" ? 'selected' : ''; ?>>
+                        Oldest - Newest (Ascending)
+                    </option>
                 </select>
-                <button type="button" class="btn btn-primary ml-2">Filter</button>
+                <button type="submit" class="btn btn-primary ml-2">Filter</button>
                 <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createPostModal">
                     Create Post
                 </button>
