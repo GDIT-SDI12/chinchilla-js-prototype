@@ -47,6 +47,7 @@ if (!empty($_POST['CreateNewPost'])) {
     }
     $newPost->setAuthor($author->getUsername());
     $newPost->setCreatedAt(date('Y-m-d H:i:s'));
+    $newPost->setExpiredAt(date('Y-m-d H:i:s', strtotime($newPost->getCreatedAt() . '+ 30 days')));
 
     $postDao = new PostDao();
     $postId = $postDao->create($newPost);
