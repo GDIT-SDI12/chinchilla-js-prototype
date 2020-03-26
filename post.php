@@ -58,14 +58,19 @@ if ($post == null) {
                         <label class="form-control-sm" id="email"><?= $email ?></label>
                     </div>
                 </div>
-                <button class="btn btn-outline-primary btn-block">Save</button>
+                <?php if ($user->getSavedPosts() && in_array($postId, $user->getSavedPosts())) { ?>
+                    <input type="button" class="btn btn-outline-secondary btn-block"
+                           onclick="removePost(<?= $postId ?>);" value="Remove"/>
+                <?php } else { ?>
+                    <input type="button" class="btn btn-outline-primary btn-block" onclick="savePost(<?= $postId ?>);"
+                           value="Save"/>
+                <?php } ?>
             </form>
         </div>
         <div class="col-md-7 ml-3">
             <div class="row my-5">
                 <h1><?= $post->getTitle(); ?></h1>
             </div>
-
             <div class="row mb-3">
                 <?= $post->getBody(); ?>
             </div>
@@ -73,4 +78,7 @@ if ($post == null) {
     </div>
 </div>
 </body>
+
+<script type="text/javascript" src="js/js.js"></script>
+
 </html>

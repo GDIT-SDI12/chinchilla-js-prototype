@@ -9,6 +9,7 @@ class User
     private $phoneNumber;
     private $email;
     private $role;
+    private $savedPosts;
 
     public function getUsername()
     {
@@ -78,5 +79,31 @@ class User
     public function setRole($role)
     {
         $this->role = $role;
+    }
+
+    public function getSavedPosts()
+    {
+        return $this->savedPosts;
+    }
+
+    public function setSavedPosts($postIds)
+    {
+        $this->savedPosts = array_unique($postIds);
+    }
+
+    public function addPosts(...$postIds)
+    {
+        if (null == $this->savedPosts) {
+            $this->savedPosts = [];
+        }
+        $this->savedPosts = array_unique(array_merge($this->savedPosts, $postIds));
+    }
+
+    public function subtractPosts(...$postIds)
+    {
+        if (null == $this->savedPosts) {
+            return;
+        }
+        $this->savedPosts = array_diff($this->savedPosts, $postIds);
     }
 }

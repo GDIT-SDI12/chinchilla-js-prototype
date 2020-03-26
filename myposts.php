@@ -202,7 +202,8 @@ if (!empty($_POST['CreateNewPost'])) {
                         </div>
                         <div class="col-md-2">
                             <div class="card-body">
-                                <a type="button" class="btn btn-outline-primary btn-block" href="post.php?post=<?=$myPost->getId(); ?>">Edit</a>
+                                <a type="button" class="btn btn-outline-primary btn-block"
+                                   href="post.php?post=<?= $myPost->getId(); ?>">Edit</a>
                                 <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
                                 <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
                             </div>
