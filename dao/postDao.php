@@ -148,8 +148,8 @@ class PostDao
         $stmt->bind_param("ssssisi",
             $p_body,
             $p_title,
-            $p_approvedAt,
             $p_expiryDate,
+            $p_approvedAt,
             $p_isActive,
             $p_type,
             $p_id
@@ -180,17 +180,17 @@ class PostDao
     {
         $insertId = 0;
 
-        $sql = "insert into " . $this->table . " (author, body, title, type)"
-            . " values (?, ?, ?, (select id from " . $this->postTypesTable . " where type = ?))";
+        $sql = "insert into " . $this->table . " (author, body, title, type, created_at)"
+            . " values (?, ?, ?, (select id from " . $this->postTypesTable . " where type = ?), ?)";
 
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("ssss",
+        $stmt->bind_param("sssss",
             $p_author,
             $p_body,
             $p_title,
-            $p_type
-//                $p_createdAt
+            $p_type,
+            $p_createdAt
 //                $p_expiryDate
         );
 
@@ -198,7 +198,7 @@ class PostDao
         $p_body = $post->getBody();
         $p_title = $post->getTitle();
         $p_type = $post->getType();
-//            $p_createdAt = $dat;
+        $p_createdAt = $post->getCreatedAt();
 //            $p_expiryDate = $post->;
 
         if ($stmt->execute()) {
