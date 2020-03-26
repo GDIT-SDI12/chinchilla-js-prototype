@@ -89,10 +89,11 @@ class PostDao
                 from " . $this->table . " as p
                 inner join post_types as pt on p.type = pt.id
                 join images as i on i.post_id = p.id
-                where p.id = ?";
+                where p.id = ? group by p.id";
         $post = new Post();
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
+        echo $con->error;
         $stmt->bind_param("i", $p_id);
 
         $p_id = $id;
