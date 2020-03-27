@@ -80,7 +80,7 @@ $posts = $postDao->list($postFilter);
                             <a href="post.php?post=<?= $post->getId(); ?>">
                                 <h5 class="card-title"><?= $post->getTitle(); ?></h5>
                             </a>
-                            <p class="card-text"><?= $post->getBody(); ?></p>
+                            <p class="card-text short-body"><?= $post->getBody(); ?></p>
                             <p class="card-text text-right"><small class="text-muted">Posted <?= $post->getCreatedAt(); ?></small></p>
                         </div>
                     </div>
