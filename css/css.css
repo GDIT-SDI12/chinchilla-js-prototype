@@ -12,3 +12,11 @@ div.preview {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.job {
+    background: #c9ffd0;
+}
+
+.accommodation {
+    background: #f7f8b2;
+}

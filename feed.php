@@ -69,13 +69,11 @@ $posts = $postDao->list($postFilter);
             <?php foreach ($posts as $post) { ?>
                 <div class="col mb-4">
                     <div class="card">
-<!--                        <div>-->
                             <?php $src = (null == $post->getImages()) ?
                                 'http://via.placeholder.com/640x360' :
                                 'uploads/' . str_replace("#DS#", '/', array_values($post->getImages())[0]); ?>
                             <div class="p-3 preview" style="background-image: url('<?= $src ?>');"></div>
-<!--                        </div>-->
-                        <div class="card-body">
+                        <div class='card-body <?= strtolower($post->getType()); ?>'>
                             <a href="post.php?post=<?= $post->getId(); ?>">
                                 <h5 class="card-title"><?= $post->getTitle(); ?></h5>
                             </a>

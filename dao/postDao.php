@@ -14,9 +14,13 @@ class PostDao
     public function list($post)
     {
         $list = array();
-        $sql = "select *,
-                (select group_concat(filename) from images where post_id = id) as images 
-                from " . $this->table . " where 1 = 1";
+        $sql = "select
+                    id, author, body, title,
+                    created_at, approved_at, expiry_date, is_active,
+                    (select type from " . $this->postTypesTable . " where posts.type = post_types.id) as type,
+                    (select group_concat(filename) from images where post_id = id) as images
+                 from " . $this->table . "
+                 where 1 = 1";
 
         if (isset($post)) {
             if (null !== $post->getId()) {
