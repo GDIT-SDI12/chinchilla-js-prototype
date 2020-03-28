@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         $user->setRole('User');
         $userDao->create($user);
-        header("location: /login.php");
+        header("location: ./login.php");
         exit;
     }
 }
