@@ -15,7 +15,7 @@ $(".approve").click(function (e) {
     });
 });
 
-function savePost(postId) {
+function subscribePost(postId) {
     $.ajax({
         type: "POST",
         url: "./savePost.php",
@@ -31,7 +31,7 @@ function savePost(postId) {
     });
 }
 
-function removePost(postId) {
+function unsubscribePost(postId) {
     $.ajax({
         type: "POST",
         url: "./removePost.php",

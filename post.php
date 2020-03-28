@@ -60,9 +60,9 @@ if ($post == null) {
                 </div>
                 <?php if ($user->getSavedPosts() && in_array($postId, $user->getSavedPosts())) { ?>
                     <input type="button" class="btn btn-outline-secondary btn-block"
-                           onclick="removePost(<?= $postId ?>);" value="Remove"/>
+                           onclick="unsubscribePost(<?= $postId ?>);" value="Remove"/>
                 <?php } else { ?>
-                    <input type="button" class="btn btn-outline-primary btn-block" onclick="savePost(<?= $postId ?>);"
+                    <input type="button" class="btn btn-outline-primary btn-block" onclick="subscribePost(<?= $postId ?>);"
                            value="Save"/>
                 <?php } ?>
             </form>
