@@ -46,3 +46,10 @@ function unsubscribePost(postId) {
         }
     });
 }
+
+$('#deletePostModal').on('show.bs.modal', function (event) {
+    const postTitle = $(event.relatedTarget).data('title');
+    const postId = $(event.relatedTarget).data('id');
+    $(this).find("#deletePostId").attr("value", postId);
+    $(this).find(".modal-body").find("#post-title").text(postTitle);
+});

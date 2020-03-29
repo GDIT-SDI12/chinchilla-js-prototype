@@ -69,7 +69,7 @@ class PostDao
                     $post->setExpiredAt($row['expiry_date']);
                     $post->setActive($row['is_active']);
                     $post->setType($row['type']);
-                    if(isset($row['images'])) {
+                    if (isset($row['images'])) {
                         $images = explode(',', $row['images']);
                         $post->setImages($images);
                     }
@@ -96,7 +96,7 @@ class PostDao
         $con = $this->db->getConnection();
         $stmt = $con->prepare($sql);
         // echo $con->error;
-        
+
         $stmt->bind_param("i", $p_id);
 
         $p_id = $id;
@@ -105,7 +105,7 @@ class PostDao
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 if ($row = $result->fetch_array()) {
-                    
+
                     $post->setId($row['id']);
                     $post->setAuthor($row['author']);
                     $post->setTitle($row['title']);
@@ -115,7 +115,7 @@ class PostDao
                     $post->setApprovedAt($row['approved_at']);
                     $post->setActive($row['is_active']);
                     $post->setType($row['type']);
-                    if(isset($row['images'])) {
+                    if (isset($row['images'])) {
                         $images = explode(',', $row['images']);
                         $post->setImages($images);
                     }
@@ -214,6 +214,30 @@ class PostDao
         $stmt->close();
         $con->close();
         return $insertId;
+    }
+
+    public function delete($postId)
+    {
+        $flag = false;
+
+        $sql = "DELETE FROM " . $this->table .
+            " WHERE id = ?";
+
+        $con = $this->db->getConnection();
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("i",
+            $postId
+        );
+
+        if ($stmt->execute()) {
+            $flag = true;
+        } else {
+            echo "postDao delete(postId): couldn't execute sql: " . $sql . " error: " . $con->error;
+            exit();
+        }
+        $stmt->close();
+        $con->close();
+        return $flag;
     }
 
     public function getTypes()

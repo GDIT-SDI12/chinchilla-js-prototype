@@ -205,7 +205,10 @@ if (!empty($_POST['CreateNewPost'])) {
                                 <a type="button" class="btn btn-outline-primary btn-block"
                                    href="post.php?post=<?= $myPost->getId(); ?>">Edit</a>
                                 <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
-                                <button type="button" class="btn btn-outline-danger btn-block">Delete</button>
+                                <button type="button" data-title="<?= $myPost->getTitle() ?>"
+                                        data-id="<?= $myPost->getId() ?>" class="btn btn-outline-danger btn-block"
+                                        data-toggle="modal" data-target="#deletePostModal">Delete
+                                </button>
                             </div>
                         </div>
                         <div class="card-footer col">
@@ -220,6 +223,8 @@ if (!empty($_POST['CreateNewPost'])) {
 </div>
 <?php
 include_once './components/createPostModal.php';
+include_once './components/deletePostModal.php';
 ?>
 </body>
+<script type="text/javascript" src="js/js.js"></script>
 </html>
