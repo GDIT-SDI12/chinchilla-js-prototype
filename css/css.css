@@ -20,3 +20,9 @@ div.preview {
 .accommodation {
     background: #f7f8b2;
 }
+
+/*fix Bootstrap*/
+.btn-outline-secondary {
+    color: #8e8e8e;
+    border-color: #8e8e8e;
+}
