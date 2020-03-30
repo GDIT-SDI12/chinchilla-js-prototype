@@ -77,13 +77,18 @@ if (!empty($_POST['CreateNewPost'])) {
     $postId = $postDao->create($newPost);
 
     // upload image part
-    $target_dir = "uploads/" . $author->getUsername() . "/";
+    // $target_dir = "uploads" . DIRECTORY_SEPARATOR . $author->getUsername() . DIRECTORY_SEPARATOR;
+    $target_dir = getcwd() . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $author->getUsername() . DIRECTORY_SEPARATOR;
     $target_name = $author->getUsername() . "_" . time() . "_1." . pathinfo(basename($_FILES["fileToUpload"]["name"]), PATHINFO_EXTENSION);
     $target_file = $target_dir . $target_name;
-
+    echo $target_file;
     // create user directory if it doesn't exist
     if (!file_exists($target_dir)) {
+        //echo $_SERVER["DOCUMENT_ROOT"] . '<br>';
+        //echo getcwd();
+        //$testdir = getcwd() . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $author->getUsername();
         $testdir = getcwd() . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $author->getUsername();
+        echo $testdir;
         mkdir($testdir, 0777, true);
     }
 
@@ -125,8 +130,8 @@ if (!empty($_POST['CreateNewPost'])) {
         }
     }
 
-    header('location: myposts.php');
-    exit;
+    //header('location: myposts.php');
+    //exit;
 }
 
 ?>
