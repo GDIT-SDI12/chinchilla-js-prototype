@@ -1,11 +1,12 @@
 <?php
-
+require_once 'commons/validatesession.php';
 require_once 'dao/userDao.php';
 require_once 'commons/db.php';
 require_once 'entity/User.php';
 
-if (isset($_SESSION)) {
-    session_destroy();
+if (isset($_SESSION['user'])) {
+    header("location: index.php");
+    exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
