@@ -62,6 +62,9 @@ $posts = $postDao->list($postFilter);
                     </option>
                 </select>
                 <button type="submit" class="btn btn-primary ml-2">Filter</button>
+                <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createPostModal">
+                    Create Post
+                </button>
             </div>
         </form>
         <div class="row row-cols-1 row-cols-md-2" style="padding-top: 3em;">
@@ -88,3 +91,6 @@ $posts = $postDao->list($postFilter);
 </body>
 
 </html>
+<?php
+include_once './components/createPostModal.php';
+?>
