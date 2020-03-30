@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS post_types;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS mailer;
 
 -- Create tables
 -- Create default Spring Security tables schema
@@ -63,4 +64,12 @@ CREATE TABLE saved_posts
     username varchar(50) NOT NULL REFERENCES users (username),
     post_id  int         NOT NULL REFERENCES posts (id),
     PRIMARY KEY (username, post_id)
+)
+
+CREATE TABLE mailer (
+  host varchar(30) NOT NULL DEFAULT 'smtp.example.com',
+  username varchar(100) NOT NULL DEFAULT 'example@email.com',
+  password varchar(100) NOT NULL DEFAULT 'examplepass',
+  port int(11) NOT NULL DEFAULT 587,
+  maskname varchar(100) NOT NULL DEFAULT 'Mailer'
 )
