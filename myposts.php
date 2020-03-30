@@ -130,8 +130,8 @@ if (!empty($_POST['CreateNewPost'])) {
         }
     }
 
-    //header('location: myposts.php');
-    //exit;
+    header('location: myposts.php');
+    exit;
 }
 
 ?>
