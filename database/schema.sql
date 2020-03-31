@@ -52,7 +52,7 @@ CREATE TABLE posts
 
 CREATE TABLE images
 (
-    post_id  int(11)      NOT NULL,
+    post_id  int          NOT NULL,
     filename varchar(100) NOT NULL,
     KEY images_FK_posts (post_id),
     CONSTRAINT PRIMARY KEY (post_id, filename),
@@ -64,12 +64,13 @@ CREATE TABLE saved_posts
     username varchar(50) NOT NULL REFERENCES users (username),
     post_id  int         NOT NULL REFERENCES posts (id),
     PRIMARY KEY (username, post_id)
-)
+);
 
-CREATE TABLE mailer (
-  host varchar(30) NOT NULL DEFAULT 'smtp.example.com',
-  username varchar(100) NOT NULL DEFAULT 'example@email.com',
-  password varchar(100) NOT NULL DEFAULT 'examplepass',
-  port int(11) NOT NULL DEFAULT 587,
-  maskname varchar(100) NOT NULL DEFAULT 'Mailer'
+CREATE TABLE mailer
+(
+    host     varchar(30)  NOT NULL DEFAULT 'smtp.example.com',
+    username varchar(100) NOT NULL DEFAULT 'example@email.com',
+    password varchar(100) NOT NULL DEFAULT 'examplepass',
+    port     int          NOT NULL DEFAULT 587,
+    maskname varchar(100) NOT NULL DEFAULT 'Mailer'
 )
