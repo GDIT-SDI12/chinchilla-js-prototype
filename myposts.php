@@ -132,6 +132,24 @@ if (!empty($_POST['CreateNewPost'])) {
 
     header('location: myposts.php');
     exit;
+} else if (!empty($_POST['EditPost'])) {
+    $id = trim($_POST['postId']);
+    $type = trim($_POST['postType']);
+    $title = trim($_POST['title']);
+    $description = trim($_POST['description']);
+
+    $post = new Post();
+    $post = $postDao->find($id);
+
+    if(isset($post)) {
+        $post->setType($type);
+        $post->setTitle($title);
+        $post->setBody($description);
+        $postDao->update($post);
+    }
+
+    header('location: myposts.php');
+    exit;
 }
 
 ?>
