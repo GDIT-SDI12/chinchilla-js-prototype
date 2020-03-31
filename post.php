@@ -13,20 +13,22 @@ $postId = null;
 if (isset($_GET['post'])) {
     $postId = $_GET['post'];
 } else {
-    header('location: /unavailablePost.php');
+    header('location: ./unavailablePost.php');
     exit;
 }
 $postDao = new PostDao();
 $userDao = new UserDao();
 $post = $postDao->find($postId);
-$author = $userDao->find($post->getAuthor());
 
-$phoneNumber = $author->getPhoneNumber();
-$email = $author->getEmail();
-
-if ($post == null) {
-    header('location: /unavailablePost.php');
+if (isset($post)) {
+    $author = $userDao->find($post->getAuthor());
+    $phoneNumber = $author->getPhoneNumber();
+    $email = $author->getEmail();
+} else {
+    header('location: ./unavailablePost.php');
+    exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
