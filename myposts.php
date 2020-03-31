@@ -231,7 +231,7 @@ if (!empty($_POST['CreateNewPost'])) {
                                     </button>
                                 <?php } ?>
 
-                                <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
+                                <?php include $myPost->isActive() ?  './commons/btnDisable.php' : './commons/btnEnable.php'; ?>
                                 <button type="button" data-title="<?= $myPost->getTitle() ?>"
                                         data-id="<?= $myPost->getId() ?>" class="btn btn-outline-danger btn-block"
                                         data-toggle="modal" data-target="#deletePostModal">Delete
