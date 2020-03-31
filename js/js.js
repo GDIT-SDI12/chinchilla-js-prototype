@@ -74,14 +74,15 @@ $('#deletePostModal').on('show.bs.modal', function (event) {
 });
 
 $('#editPostModal').on('show.bs.modal', function(event) {
-    const id = $(event.relatedTarget).data('id');
-    const type = $(event.relatedTarget).data('type');
-    const title = $(event.relatedTarget).data('title');
-    const description = $(event.relatedTarget).data('description');
-    const image = $(event.relatedTarget).data('image');
-    console.log(id + ' | ' + type + ' | ' + title + ' | ' + description + ' | ' + image);
+    var id = $(event.relatedTarget).data('id');
+    var type = $(event.relatedTarget).data('type');
+    var title = $(event.relatedTarget).data('title');
+    var description = $(event.relatedTarget).data('description');
+    var image = $(event.relatedTarget).data('image');
+    //console.log(id + ' | ' + type + ' | ' + title + ' | ' + description + ' | ' + image);
 
+    $(this).find("#editPostId").attr("value", id);
     $(this).find("#title").attr("value", title);
     $(this).find("#description").val(description);
-    
+    $(this).find('#typeSelect select').val(type);
 });
