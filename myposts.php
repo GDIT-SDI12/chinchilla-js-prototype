@@ -208,9 +208,15 @@ if (!empty($_POST['CreateNewPost'])) {
 
                         <div class="col-md-2">
                             <div class="card-body">
-
                                 <?php if(null === $myPost->getApprovedAt()) { ?>
-                                    <button type="button" class="btn btn-outline-primary btn-block">
+                                    <button type="button" class="btn btn-outline-primary btn-block"
+                                        data-toggle="modal" data-target="#editPostModal" 
+                                        data-id='<?= $myPost->getId() ?>'
+                                        data-type='<?= $myPost->getType() ?>'
+                                        data-title='<?= $myPost->getTitle() ?>'
+                                        data-description='<?= $myPost->getBody() ?>'
+                                        data-image='<?= $myPost->getImages()[0] ?>'
+                                    >
                                         Edit
                                     </button>
                                 <?php } else { ?>
@@ -256,6 +262,7 @@ if (!empty($_POST['CreateNewPost'])) {
 </div>
 <?php
 include_once './components/createPostModal.php';
+include_once './components/editPostModal.php';
 include_once './components/deletePostModal.php';
 ?>
 </body>
