@@ -205,10 +205,26 @@ if (!empty($_POST['CreateNewPost'])) {
                                 <p class="card-text"><?= $myPost->getBody(); ?></p>
                             </div>
                         </div>
+
                         <div class="col-md-2">
                             <div class="card-body">
-                                <a type="button" class="btn btn-outline-primary btn-block"
-                                   href="post.php?post=<?= $myPost->getId(); ?>">Edit</a>
+
+                                <?php if(null === $myPost->getApprovedAt()) { ?>
+                                    <button type="button" class="btn btn-outline-primary btn-block">
+                                        Edit
+                                    </button>
+                                <?php } else { ?>
+                                    <button type="button" 
+                                        class="btn btn-outline-primary btn-block" 
+                                        style='pointer-events: none; text-decoration: line-through' 
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="Cannot edit approved post!"
+                                        disabled>
+                                            Edit
+                                    </button>
+                                <?php } ?>
+
                                 <button type="button" class="btn btn-outline-secondary btn-block">Disable</button>
                                 <button type="button" data-title="<?= $myPost->getTitle() ?>"
                                         data-id="<?= $myPost->getId() ?>" class="btn btn-outline-danger btn-block"
@@ -216,9 +232,21 @@ if (!empty($_POST['CreateNewPost'])) {
                                 </button>
                             </div>
                         </div>
-                        <div class="card-footer col">
-                            <p class="card-text text-right mr-3"><small class="text-muted">Approved
-                                    last <?= $myPost->getApprovedAt(); ?></small></p>
+
+                        <div class="card-footer col" 
+                            <?php if(null === $myPost->getApprovedAt()) { ?>
+                                style="background-color: palegoldenrod;"
+                            <?php } ?>
+                        >
+                            <p class="card-text text-right mr-3">
+                                <small class="text-muted">
+                                    <?php if(null === $myPost->getApprovedAt()) { ?>
+                                        Pending Approval
+                                    <?php } else { ?>
+                                        Approved last <?= $myPost->getApprovedAt(); ?>
+                                    <?php } ?>
+                                </small>
+                            </p>
                         </div>
                     </div>
                 </div>
