@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'dao/userDao.php';
 require_once 'commons/db.php';
 require_once 'entity/User.php';
