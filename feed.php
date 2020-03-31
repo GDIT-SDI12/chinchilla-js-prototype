@@ -7,6 +7,7 @@ include_once './dao/postDao.php';
 $postFilter = new Post();
 $typeFilter = "";
 $sortFilter = "";
+$postFilter->setActive(true);
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     if (isset($_GET["typeFilter"])) {

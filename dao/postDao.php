@@ -46,6 +46,9 @@ class PostDao
                 }
             }
 
+            if ($post->isActive()) {
+                $sql .= " and is_active = 1";
+            }
 
             if (null !== $post->getOrderBy()) {
                 $sql .= " order by created_at " . $post->getOrderBy();
