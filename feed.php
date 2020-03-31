@@ -62,9 +62,9 @@ $posts = $postDao->list($postFilter);
                     </option>
                 </select>
                 <button type="submit" class="btn btn-primary ml-2">Filter</button>
-                <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createPostModal">
+                <!-- <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createPostModal">
                     Create Post
-                </button>
+                </button> -->
             </div>
         </form>
         <div class="row row-cols-1 row-cols-md-2" style="padding-top: 3em;">
@@ -75,7 +75,9 @@ $posts = $postDao->list($postFilter);
                             <?php $src = (null == $post->getImages()) ?
                                 'http://via.placeholder.com/640x360' :
                                 'uploads/' . str_replace("#DS#", '/', array_values($post->getImages())[0]); ?>
-                            <div class="p-3 preview" style="background-image: url('<?= $src ?>');"></div>
+                            <a href="post.php?post=<?= $post->getId(); ?>">
+                                <div class="p-3 preview" style="background-image: url('<?= $src ?>');"></div>
+                            </a>
                         <div class='card-body <?= strtolower($post->getType()); ?>'>
                             <a href="post.php?post=<?= $post->getId(); ?>">
                                 <h5 class="card-title"><?= $post->getTitle(); ?></h5>
