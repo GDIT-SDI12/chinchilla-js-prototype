@@ -22,7 +22,7 @@ CREATE TABLE users
     password     varchar(50)        NOT NULL,
     first_name   varchar(50),
     last_name    varchar(50),
-    email        varchar(30) UNIQUE NOT NULL,
+    email        varchar(50) UNIQUE NOT NULL,
     phone_number varchar(15),
     role         varchar(20)        NOT NULL,
     FOREIGN KEY (role) references roles (role)
