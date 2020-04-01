@@ -41,31 +41,37 @@ $posts = $postDao->list($postFilter);
 <body>
     <?php require_once 'components/navbar.php' ?>
     <div class="container">
-        <form action="feed.php" method="GET" class="form-inline" style="padding-top: 3em;">
-            <div class="form-row ml-5">
-                <select id="typeFilter" name="typeFilter" class="form-control form-control">
-                    <option value="all" <?= $typeFilter == "all" ? 'selected' : ''; ?>>
-                        All (Default)
-                    </option>
-                    <option value="job" <?= $typeFilter == "job" ? 'selected' : ''; ?>>
-                        Jobs
-                    </option>
-                    <option value="rent" <?= $typeFilter == "rent" ? 'selected' : ''; ?>>
-                        Rent
-                    </option>
-                </select>
-                <select id="sortFilter" name="sortFilter" class="form-control form-control ml-2">
-                    <option value="desc" <?= $sortFilter == "desc" ? 'selected' : ''; ?>>
-                        Newest - Oldest (Descending)
-                    </option>
-                    <option value="asc" <?= $sortFilter == "asc" ? 'selected' : ''; ?>>
-                        Oldest - Newest (Ascending)
-                    </option>
-                </select>
-                <button type="submit" class="btn btn-primary ml-2">Filter</button>
-                <!-- <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createPostModal">
-                    Create Post
-                </button> -->
+        <form action="feed.php" method="GET" style="padding-top: 3em;">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <select id="typeFilter" name="typeFilter" class="form-control">
+                        <option value="all" <?= $typeFilter == "all" ? 'selected' : ''; ?>>
+                            All (Default)
+                        </option>
+                        <option value="job" <?= $typeFilter == "job" ? 'selected' : ''; ?>>
+                            Jobs
+                        </option>
+                        <option value="rent" <?= $typeFilter == "rent" ? 'selected' : ''; ?>>
+                            Rent
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <select id="sortFilter" name="sortFilter" class="form-control">
+                        <option value="desc" <?= $sortFilter == "desc" ? 'selected' : ''; ?>>
+                            Newest - Oldest (Descending)
+                        </option>
+                        <option value="asc" <?= $sortFilter == "asc" ? 'selected' : ''; ?>>
+                            Oldest - Newest (Ascending)
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-1">
+                    <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                </div>
+                    <!-- <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createPostModal">
+                        Create Post
+                    </button> -->
             </div>
         </form>
         <div class="row row-cols-1 row-cols-md-2" style="padding-top: 3em;">
